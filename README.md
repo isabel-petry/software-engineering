@@ -19,4 +19,4 @@ A Defesa Civil enfrenta desafios significativos na coordenação e gestão de re
 - O sistema deverá estar de acordo com a Lei Geral de Proteção aos Dados (LGPD)
 
 ## DIAGRAMA DE CASOS DE USO
-[Diagram](./Diagrams/useCases.png)
+![Diagram](./Diagrams/useCases.png)

@@ -1,0 +1,17 @@
+@startuml
+
+:Funcionario: -right-> (Manter cadastro)
+:Funcionario: -down-> (Fazer login)
+:Funcionario: -down-> (Fazer logoff)
+:Funcionario: -up-> (Receber alerta)
+:Funcionario: -down-> (Enviar mensagem)
+:Funcionario: -up-> (Acessar estoque)
+:Funcionario: -left-> (Solicitar recurso)
+:Funcionario: -up-> (Registrar ocorrencia)
+
+:Administrador: -up-> (Fazer login)
+:Administrador: -up-> (Fazer logoff)
+:Administrador: -down-> (Aprovar recurso)
+:Administrador: --> (Cadastrar recurso)
+
+@enduml

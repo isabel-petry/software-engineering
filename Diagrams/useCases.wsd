@@ -1,17 +1,29 @@
 @startuml
 
-:Funcionario: -right-> (Manter cadastro)
-:Funcionario: -down-> (Fazer login)
-:Funcionario: -down-> (Fazer logoff)
-:Funcionario: -up-> (Receber alerta)
-:Funcionario: -down-> (Enviar mensagem)
-:Funcionario: -up-> (Acessar estoque)
-:Funcionario: -left-> (Solicitar recurso)
-:Funcionario: -up-> (Registrar ocorrencia)
+left to right direction
+package DefesaCivil {
+    usecase "Acessar estoque" as acessarEstoque
+    usecase "Cadastrar suprimento" as cadastrarSuprimento
+    usecase "Enviar mensagem" as mensagem
+    usecase "Receber alerta" as receberAlerta
+    usecase "Registrar emergencia" as registrarEmergencia
+    usecase "Fazer logoff" as fazerLogoff
+    usecase "Fazer login" as fazerLogin
+    usecase "Manter cadastro" as manterCadastro
+}
 
-:Administrador: -up-> (Fazer login)
-:Administrador: -up-> (Fazer logoff)
-:Administrador: -down-> (Aprovar recurso)
-:Administrador: --> (Cadastrar recurso)
+:MembroEquipe: --> fazerLogin
+:MembroEquipe: --> fazerLogoff
+:MembroEquipe: --> receberAlerta
+:MembroEquipe: --> acessarEstoque
+:MembroEquipe: --> mensagem
+
+registrarEmergencia <-- :MembroComando: 
+fazerLogin <-- :MembroComando: 
+fazerLogoff <-- :MembroComando: 
+acessarEstoque <-- :MembroComando: 
+cadastrarSuprimento <-- :MembroComando: 
+manterCadastro <-- :MembroComando: 
+mensagem <-- :MembroComando: 
 
 @enduml

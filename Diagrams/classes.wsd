@@ -1,0 +1,87 @@
+@startuml
+
+class Mensagem {
+    - usuario : USUARIO
+    - texto : STRING
+    - timestamp : TIMESTAMP
+    + get()
+    + set()
+}
+
+class Chat {
+    - mensagem[] : MENSAGEM[]
+    - equipe[] : EQUIPE[]
+    + get()
+    + set()
+    + enviarMensagem()
+}
+
+class Emergencia {
+    - tipo : STRING
+    - ativa : BOOLEAN
+    - localizacao : LOCALIZACAO
+    - chat : CHAT
+    - equipe[] : EQUIPE[]
+    + get()
+    + set()
+}
+
+class Localizacao {
+    - logradouro : STRING
+    - numero : STRING
+    - bairro : STRING
+    - municipio : STRING 
+    - complemento : STRING
+    - cep : STRING 
+    + get()
+    + set()
+}
+
+class Estoque {
+    - item[] : ITEM[]
+    + cadastrar()
+    + alterar()
+    + remover()
+    + acessar()
+}
+
+class Equipe {
+    - usuario[] : USUARIO[]
+    + get()
+    + set()
+
+}
+
+class Item {
+    - nome : STRING 
+    - quantidade : INT 
+    - nivelCritico : CHAR 
+    - descricao : STRING
+    + get()
+    + set()
+}
+
+class Usuario {
+    - nome : STRING
+    - senha : STRING
+    - comandante : BOOLEAN
+    + get()
+    + set()
+}
+
+
+class Orquestrador {
+    + orequestrar( )
+}
+
+Orquestrador --> Estoque : utiliza
+Orquestrador --> Emergencia : utiliza
+
+Emergencia *-- Chat
+Emergencia *-- Equipe
+Emergencia *-- Localizacao
+Estoque *-- Item
+Equipe *-- Usuario
+Chat *-- Mensagem
+
+@enduml

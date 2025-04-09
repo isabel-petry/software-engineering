@@ -19,3 +19,9 @@ A Defesa Civil enfrenta desafios significativos na coordenação e gestão de re
 
 ## Diagrama de caso de uso
 ![Diagram](./Diagrams/useCases.svg)
+
+## Fluxograma
+![Diagram](./Diagrams/fluxograma.jpeg)
+
+## Diagrama de classes
+![Diagram](./Diagrams/classes.svg)

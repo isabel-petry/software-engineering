@@ -10,7 +10,6 @@ class Mensagem {
 
 class Chat {
     - mensagem[] : MENSAGEM[]
-    - equipe[] : EQUIPE[]
     + get()
     + set()
     + enviarMensagem()

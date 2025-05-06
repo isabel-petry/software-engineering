@@ -6,7 +6,7 @@ import java.util.Scanner;
 
 public class Menu {
 
-    public static void mostrarMenu() throws URISyntaxException, SQLException {
+    public static void mostrarMenu() throws URISyntaxException, SQLException, ClassNotFoundException {
         Scanner scanner = new Scanner(System.in);
         Usuario usuarioLogado = null;
 
@@ -31,25 +31,13 @@ public class Menu {
                 if (usuarioLogado != null) {
                     System.out.println("Login realizado com sucesso! Bem-vindo, " + usuarioLogado.getNome());
 
-                    while (true) {
-                        System.out.println("\nMenu Principal:");
-                        System.out.println("1 - Listar funcionários");
-                        System.out.println("2 - Alterar dados de usuário");
-                        System.out.println("3 - Sair");
-                        System.out.print("Opção: ");
-                        String opcaoInterna = scanner.nextLine();
-
-                        if (opcaoInterna.equals("1")) {
-                            Funcionalidades.funcionarios(usuarioLogado);
-                        } else if (opcaoInterna.equals("2")) {
-                            alterar_dados_usuario(usuarioLogado); // Chamando o método para alterar dados do usuário
-                        } else if (opcaoInterna.equals("3")) {
-                            System.out.println("Encerrando sessão...");
-                            break;
-                        } else {
-                            System.out.println("Opção inválida.");
-                        }
+                    if(Funcionalidades.checar_adm(usuarioLogado)) {
+                        menu_admin(usuarioLogado);
+                    }else{
+                        menu_membro(usuarioLogado);
                     }
+
+
                 } else {
                     System.out.println("Nome de usuário ou senha incorretos.");
                 }
@@ -65,8 +53,91 @@ public class Menu {
         scanner.close();
     }
 
+    public static void menu_admin(Usuario usuarioLogado) throws URISyntaxException, SQLException, ClassNotFoundException {
+        Scanner scanner = new Scanner(System.in);
+        while (true) {
+            System.out.println("\nMenu Principal:");
+            System.out.println("1 - Listar funcionários");
+            System.out.println("2 - Alterar dados de usuário");
+            System.out.println("3 - Registrar emergencia");
+            System.out.println("4 - Listar emergencias");
+            System.out.println("5 - Cadastrar usuario");
+            System.out.println("6 - Sair");
+            System.out.print("Opção: ");
+            String opcaoInterna = scanner.nextLine();
+
+            switch (opcaoInterna) {
+                case "1":
+                    Funcionalidades.funcionarios();
+                    break;
+                case "2":
+                    alterar_dados_usuario(usuarioLogado); // Chamando o método para alterar dados do usuário
+                    break;
+                case "3":
+                    System.out.print("Local da emergencia: ");
+                    String local = scanner.nextLine();
+                    System.out.print("Motivo da emergencia: ");
+                    String motivo = scanner.nextLine();
+                    Funcionalidades.registrar_emergencia(local, motivo);
+                    break;
+                case "4":
+                    Funcionalidades.emergencias();
+                    break;
+                case "5":
+                    System.out.print("Nome do Usuario: ");
+                    String nome = scanner.nextLine();
+                    System.out.print("Senha do Usuario: ");
+                    String senha = scanner.nextLine();
+                    Funcionalidades.cadastrar_usuario(nome, senha);
+                    break;
+                case "6":
+                    System.out.println("Encerrando sessão...");
+                    break;
+                default:
+                    System.out.println("Opção inválida.");
+
+            }
+            if (opcaoInterna.equals("6")){
+                break;
+            }
+        }
+    }
+
+
+    public static void menu_membro(Usuario usuarioLogado) throws URISyntaxException, SQLException, ClassNotFoundException {
+        Scanner scanner = new Scanner(System.in);
+        while (true) {
+            System.out.println("\nMenu Principal:");
+            System.out.println("1 - Listar funcionários");
+            System.out.println("2 - Listar emergências");
+            System.out.println("3 - Sair");
+            System.out.print("Opção: ");
+            String opcaoInterna = scanner.nextLine();
+
+            switch (opcaoInterna) {
+                case "1":
+                    Funcionalidades.funcionarios();
+                    break;
+                case "2":
+                    Funcionalidades.emergencias();
+                    break;
+                case "3":
+                    System.out.println("Encerrando sessão...");
+                    break;
+                default:
+                    System.out.println("Opção inválida.");
+            }
+            if (opcaoInterna.equals("3")){
+                break;
+            }
+        }
+
+    }
+
+
+
     // Método para alterar dados do usuário
-    public static void alterar_dados_usuario(Usuario user) throws URISyntaxException, SQLException {
+    public static void alterar_dados_usuario(Usuario user) throws URISyntaxException, SQLException, ClassNotFoundException {
         if (!Funcionalidades.checar_adm(user)) {
             System.out.println("Acesso negado. Você não tem permissão para alterar dados.");
             return;

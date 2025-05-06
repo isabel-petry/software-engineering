@@ -4,7 +4,7 @@ import java.net.URISyntaxException;
 import java.sql.SQLException;
 
 public class App {
-    public static void main(String[] args) throws URISyntaxException, SQLException{
+    public static void main(String[] args) throws URISyntaxException, SQLException, ClassNotFoundException {
         Menu.mostrarMenu();
     }
 }

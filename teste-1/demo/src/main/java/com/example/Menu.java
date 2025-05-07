@@ -50,7 +50,6 @@ public class Menu {
             }
         }
 
-        scanner.close();
     }
 
     public static void menu_admin(Usuario usuarioLogado) throws URISyntaxException, SQLException, ClassNotFoundException {
@@ -131,7 +130,6 @@ public class Menu {
                 break;
             }
         }
-
     }
 
 

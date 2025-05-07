@@ -62,7 +62,7 @@ public class Funcionalidades {
 
                         boolean admin = (comandante == 1);
 
-                        return new Usuario(id, nome, admin);
+                        return new Usuario(id, nome, pass, admin);
                     } else {
                         return null;
                     }
@@ -212,7 +212,7 @@ public class Funcionalidades {
                  ResultSet rs = stmt.executeQuery()) {
 
                 while (rs.next()) {
-                    int id = rs.getInt("id");
+                    //int id = rs.getInt("id");
                     String local = rs.getString("local");
                     String motivo = rs.getString("motivo");
 

@@ -54,28 +54,31 @@ public class Menu {
 
     public static void menu_admin(Usuario usuarioLogado) throws URISyntaxException, SQLException, ClassNotFoundException {
         Scanner scanner = new Scanner(System.in);
+        Estoque estoque = new Estoque(); // Instância da classe Estoque
+    
         while (true) {
             System.out.println("\nMenu Principal:");
             System.out.println("1 - Listar funcionários");
             System.out.println("2 - Alterar dados de usuário");
-            System.out.println("3 - Registrar emergencia");
-            System.out.println("4 - Listar emergencias");
-            System.out.println("5 - Cadastrar usuario");
-            System.out.println("6 - Sair");
+            System.out.println("3 - Registrar emergência");
+            System.out.println("4 - Listar emergências");
+            System.out.println("5 - Cadastrar usuário");
+            System.out.println("6 - Gerenciar estoque");
+            System.out.println("7 - Sair");
             System.out.print("Opção: ");
             String opcaoInterna = scanner.nextLine();
-
+    
             switch (opcaoInterna) {
                 case "1":
                     Funcionalidades.funcionarios();
                     break;
                 case "2":
-                    alterar_dados_usuario(usuarioLogado); // Chamando o método para alterar dados do usuário
+                    alterar_dados_usuario(usuarioLogado);
                     break;
                 case "3":
-                    System.out.print("Local da emergencia: ");
+                    System.out.print("Local da emergência: ");
                     String local = scanner.nextLine();
-                    System.out.print("Motivo da emergencia: ");
+                    System.out.print("Motivo da emergência: ");
                     String motivo = scanner.nextLine();
                     Funcionalidades.registrar_emergencia(local, motivo);
                     break;
@@ -83,25 +86,23 @@ public class Menu {
                     Funcionalidades.emergencias();
                     break;
                 case "5":
-                    System.out.print("Nome do Usuario: ");
+                    System.out.print("Nome do Usuário: ");
                     String nome = scanner.nextLine();
-                    System.out.print("Senha do Usuario: ");
+                    System.out.print("Senha do Usuário: ");
                     String senha = scanner.nextLine();
                     Funcionalidades.cadastrar_usuario(nome, senha);
                     break;
                 case "6":
-                    System.out.println("Encerrando sessão...");
+                    gerenciarEstoque(estoque, scanner); // Chama o método para gerenciar o estoque
                     break;
+                case "7":
+                    System.out.println("Encerrando sessão...");
+                    return;
                 default:
-                    System.out.println("Opção inválida.");
-
-            }
-            if (opcaoInterna.equals("6")){
-                break;
+                    System.out.println("Opção inválida! Tente novamente.");
             }
         }
     }
-
 
     public static void menu_membro(Usuario usuarioLogado) throws URISyntaxException, SQLException, ClassNotFoundException {
         Scanner scanner = new Scanner(System.in);
@@ -190,4 +191,59 @@ public class Menu {
             }
         }
     }
-}
+
+// Método para gerenciar o estoque
+public static void gerenciarEstoque(Estoque estoque, Scanner scanner) {
+    while (true) {
+        System.out.println("\n--- Gerenciamento de Estoque ---");
+        System.out.println("1 - Cadastrar item");
+        System.out.println("2 - Alterar item");
+        System.out.println("3 - Remover item");
+        System.out.println("4 - Listar itens");
+        System.out.println("5 - Voltar ao menu principal");
+        System.out.print("Opção: ");
+        String opcaoEstoque = scanner.nextLine();
+
+        switch (opcaoEstoque) {
+            case "1":
+                System.out.print("Nome do item: ");
+                String nome = scanner.nextLine();
+                System.out.print("Quantidade: ");
+                int quantidade = Integer.parseInt(scanner.nextLine());
+                System.out.print("Estado crítico (C para crítico, N para normal): ");
+                char estadoCrit = scanner.nextLine().charAt(0);
+                System.out.print("Descrição: ");
+                String descricao = scanner.nextLine();
+                try {
+                    Item item = new Item(nome, quantidade, estadoCrit, descricao);
+                    estoque.cadastrar(item);
+                } catch (IllegalArgumentException e) {
+                    System.out.println("Erro ao cadastrar item: " + e.getMessage());
+                }
+                break;
+            case "2":
+                System.out.print("Nome do item a ser alterado: ");
+                String nomeAlterar = scanner.nextLine();
+                System.out.print("Nova quantidade: ");
+                int novaQuantidade = Integer.parseInt(scanner.nextLine());
+                System.out.print("Novo estado crítico (C para crítico, N para normal): ");
+                char novoEstadoCrit = scanner.nextLine().charAt(0);
+                System.out.print("Nova descrição: ");
+                String novaDescricao = scanner.nextLine();
+                estoque.alterar(nomeAlterar, novaQuantidade, novoEstadoCrit, novaDescricao);
+                break;
+            case "3":
+                System.out.print("Nome do item a ser removido: ");
+                String nomeRemover = scanner.nextLine();
+                estoque.remover(nomeRemover);
+                break;
+            case "4":
+                estoque.acessar();
+                break;
+            case "5":
+                return; // Volta ao menu principal
+            default:
+                System.out.println("Opção inválida! Tente novamente.");
+        }
+    }
+}}

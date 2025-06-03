@@ -260,7 +260,7 @@ public class Menu implements Serializable {
 		}
 	}
 
-	public static void menuChat(Usuario usuarioLogado, Scanner scanner) {
+	public static void menuChat(Usuario usuarioLogado, Scanner scanner) throws ClassNotFoundException, URISyntaxException, SQLException {
 	    System.out.println("=== Bem-vindo ao Chat ===" + '\n');
         Usuario usuario = usuarioLogado;
         Cliente cliente = new Cliente("localhost", 6789, usuario);
@@ -273,6 +273,11 @@ public class Menu implements Serializable {
             String texto = scanner.nextLine();
             if (texto.equalsIgnoreCase("/sair")) {
                 cliente.encerrar();
+				if (Funcionalidades.checar_adm(usuarioLogado)) {
+						menu_admin(usuarioLogado);
+					} else {
+						menu_membro(usuarioLogado);
+					}
                 break;
             }
             cliente.enviarMensagem(texto);

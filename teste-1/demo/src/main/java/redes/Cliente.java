@@ -84,8 +84,7 @@ public class Cliente implements Serializable{
 					chat.exibirMensagens();
 				}
 			} catch (IOException | ClassNotFoundException e) {
-				System.out.println("Servidor desconectou.");
-				encerrar();
+				System.out.println();
 			}
 		}
 	}

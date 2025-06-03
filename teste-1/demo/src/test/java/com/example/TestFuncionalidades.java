@@ -14,7 +14,8 @@ public class TestFuncionalidades {
 
     @BeforeAll
     public static void setUp() throws SQLException, URISyntaxException {
-        connection = Funcionalidades.connect_to_db("sisdef_db_test.db");
+        Funcionalidades.setDbName("sisdef_db_test.db");
+        connection = Funcionalidades.connect_to_db();
     }
 
     @AfterAll
@@ -36,10 +37,8 @@ public class TestFuncionalidades {
 
     @Test
     public void testLoginUsuario_sucesso() throws Exception {
-        // Prepare: insere usuário para login
         Funcionalidades.cadastrar_usuario("teste_user", "senha123");
 
-        // Testa login
         Usuario user = Funcionalidades.login_usuario("teste_user", "senha123");
 
         assertNotNull(user);

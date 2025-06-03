@@ -1,8 +1,12 @@
-package com.example;
+package redes;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 
-public class Mensagem {
+import com.example.Usuario;
+
+public class Mensagem implements Serializable{
+	private static final long serialVersionUID = 1L; // Optional but recommended
     private Usuario usuario; // Objeto da classe Usuario (remetente)
     private String texto; // Texto da mensagem
     private LocalDateTime timestamp; // Data e hora da mensagem

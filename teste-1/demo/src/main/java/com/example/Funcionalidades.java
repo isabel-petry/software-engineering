@@ -12,11 +12,11 @@ import java.sql.SQLException;
 public class Funcionalidades {
 
     // Método de conexão com o banco de dados
-    public static Connection connect_to_db() throws URISyntaxException, SQLException {
+    public static Connection connect_to_db(String nomeBanco) throws URISyntaxException, SQLException {
         // Obtendo o caminho do banco dentro do pacote 'resources'
-        URL resource = Funcionalidades.class.getClassLoader().getResource("sisdef_db.db");
+        URL resource = Funcionalidades.class.getClassLoader().getResource(nomeBanco);
         if (resource == null) {
-            throw new IllegalArgumentException("Arquivo usuarios.db não encontrado em resources!");
+            throw new IllegalArgumentException("Arquivo não encontrado em resources!");
         }
 
         // Constrói a URL do banco SQLite com caminho completo
@@ -47,7 +47,7 @@ public class Funcionalidades {
     public static Usuario login_usuario(String name, String pass) throws URISyntaxException, SQLException, ClassNotFoundException {
         Connection db = null;
         try {
-            db = connect_to_db();
+            db = connect_to_db("sisdef_db.db");
 
             String sql = "SELECT id, nome, senha, comandante FROM usuarios WHERE nome = ? AND senha = ?";
             try (PreparedStatement stmt = db.prepareStatement(sql)) {
@@ -81,7 +81,7 @@ public class Funcionalidades {
         Connection db = null;
 
         try {
-            db = connect_to_db();
+            db = connect_to_db("sisdef_db.db");
 
             String sql = "SELECT count(id) FROM usuarios";
             try (PreparedStatement stmt = db.prepareStatement(sql);
@@ -100,7 +100,7 @@ public class Funcionalidades {
     public static void cadastrar_usuario(String nome, String senha) throws URISyntaxException, SQLException, ClassNotFoundException {
         int id = num_usuarios() + 1;
         int comandate = 0;
-        Connection db = connect_to_db();
+        Connection db = connect_to_db("sisdef_db.db");
         String sql = "INSERT INTO usuarios (id, nome, senha, comandante) VALUES (?, ?, ?, ?)";
         try (PreparedStatement stmt = db.prepareStatement(sql)) {
             stmt.setInt(1, id);
@@ -128,7 +128,7 @@ public class Funcionalidades {
         Connection db = null;
 
         try {
-            db = connect_to_db();
+            db = connect_to_db("sisdef_db.db");
 
             String sql = "SELECT count(id) FROM emergencias";
             try (PreparedStatement stmt = db.prepareStatement(sql);
@@ -146,7 +146,7 @@ public class Funcionalidades {
 
     public static void registrar_emergencia(String local, String motivo) throws URISyntaxException, SQLException, ClassNotFoundException {
         int id = num_emergencias() + 1;
-        Connection db = connect_to_db();
+        Connection db = connect_to_db("sisdef_db.db");
         String sql = "INSERT INTO emergencias (id, local, motivo) VALUES (?, ?, ?)";
         try (PreparedStatement stmt = db.prepareStatement(sql)) {
             stmt.setInt(1, id);
@@ -173,7 +173,7 @@ public class Funcionalidades {
         Connection db = null;
     
         try {
-            db = connect_to_db();
+            db = connect_to_db("sisdef_db.db");
     
             String sql = "SELECT * FROM usuarios";
             try (PreparedStatement stmt = db.prepareStatement(sql);
@@ -205,7 +205,7 @@ public class Funcionalidades {
         Connection db = null;
 
         try {
-            db = connect_to_db();
+            db = connect_to_db("sisdef_db.db");
 
             String sql = "SELECT * FROM emergencias";
             try (PreparedStatement stmt = db.prepareStatement(sql);
@@ -234,7 +234,7 @@ public class Funcionalidades {
 
 
     public static void alterar_nome(int id, String novoNome) throws SQLException, URISyntaxException, ClassNotFoundException {
-        Connection db = connect_to_db();
+        Connection db = connect_to_db("sisdef_db.db");
         String sql = "UPDATE usuarios SET nome = ? WHERE id = ?";
         try (PreparedStatement stmt = db.prepareStatement(sql)) {
             stmt.setString(1, novoNome);
@@ -255,7 +255,7 @@ public class Funcionalidades {
 
 
     public static void alterar_senha(int id, String novaSenha) throws SQLException, URISyntaxException, ClassNotFoundException {
-        Connection db = connect_to_db();
+        Connection db = connect_to_db("sisdef_db.db");
         String sql = "UPDATE usuarios SET senha = ? WHERE id = ?";
         try (PreparedStatement stmt = db.prepareStatement(sql)) {
             stmt.setString(1, novaSenha);
@@ -276,7 +276,7 @@ public class Funcionalidades {
 
 
     public static void alterar_status_admin(int id, boolean isAdmin) throws SQLException, URISyntaxException, ClassNotFoundException {
-        Connection db = connect_to_db();
+        Connection db = connect_to_db("sisdef_db.db");
         String sql = "UPDATE usuarios SET comandante = ? WHERE id = ?";
         try (PreparedStatement stmt = db.prepareStatement(sql)) {
             stmt.setInt(1, isAdmin ? 1 : 0);

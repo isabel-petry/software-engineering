@@ -44,21 +44,32 @@ public class Estoque {
     }
 
     // Método para acessar (listar) todos os itens
-public void acessar() {
-    if (itens.isEmpty()) {
-        System.out.println("O estoque está vazio.");
-    } else {
-        System.out.println("\n--- Itens no Estoque ---");
-        System.out.printf("%-20s %-10s %-10s %-30s%n", "Nome", "Quantidade", "Estado", "Descrição");
-        System.out.println("---------------------------------------------------------------");
-        for (Item item : itens) {
-            String estado = (item.getEstadoCrit() == 'C') ? "Crítico" : "Normal";
-            System.out.printf("%-20s %-10d %-10s %-30s%n", 
-                item.getNome(), 
-                item.getQuantidade(), 
-                estado, 
-                item.getDescricao());
+    public void acessar() {
+        if (itens.isEmpty()) {
+            System.out.println("O estoque está vazio.");
+        } else {
+            System.out.println("\n--- Itens no Estoque ---");
+            System.out.printf("%-20s %-10s %-10s %-30s%n", "Nome", "Quantidade", "Estado", "Descrição");
+            System.out.println("---------------------------------------------------------------");
+            for (Item item : itens) {
+                String estado = (item.getEstadoCrit() == 'C') ? "Crítico" : "Normal";
+                System.out.printf("%-20s %-10d %-10s %-30s%n",
+                        item.getNome(),
+                        item.getQuantidade(),
+                        estado,
+                        item.getDescricao());
+            }
+            System.out.println("---------------------------------------------------------------");
         }
-        System.out.println("---------------------------------------------------------------");
     }
-}}
+
+    public Item acessarItemPorNome(String nome) {
+        for (Item item : itens) {
+            if (item.getNome().equalsIgnoreCase(nome)) {
+                return item;
+            }
+        }
+        return null;
+    }
+
+}
